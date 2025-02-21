@@ -1,13 +1,17 @@
 //device-id  =  3cc0d925
 #define RELAY 14
 
-#include <GyverBME280.h>
+#define SSID "your wifi"
+#define PASS "********"
+#define MQTT_HOST "your_mqtt_server.com"
+#define MQTT_PORT "12345"
+#define MQTT_LOGIN "device mqtt login"
+#define MQTT_PASS "device mqtt password"
 
+#include <GyverBME280.h>
 #include <FileData.h>
 #include <LittleFS.h>
-
 #include <ESP8266WiFi.h>
-
 #include <GyverHub.h>
 #include <hub_macro.hpp>
 
@@ -23,8 +27,8 @@ FileData data(&LittleFS, "/data.dat", 'A', &mydata, sizeof(mydata));
 
 //String ssid = db[k::wifi_ssid];
 //String pass = db[k::wifi_pass];
-String ssid = "Hyper+T-2G";
-String pass = "YcapMFQA789";
+String ssid = SSID;
+String pass = PASS;
 bool auto_state;
 bool hfier_state;
 float temp;
@@ -80,7 +84,7 @@ void setup() {
   }
   
    // настройка MQTT/Serial/Bluetooth..
-  hub.mqtt.config("m6.wqtt.ru", 17210, "device", "j5S6utsX");
+  hub.mqtt.config(MQTT_HOST, MQTT_PORT, MQTT_LOGIN, MQTT_PASS);
 
   hub.onBuild(build); // подключаем билдер
   hub.begin();        // запускаем систему
